@@ -63,25 +63,44 @@ public class SuperheroDaoDBImpl implements SuperheroDao
     @Override
     public Superhero getSuperheroById( int id )
     {
-        return null;
+        final String sql = "SELECT id, name, description, superpower " +
+            "FROM superhero WHERE id = ?;";
+
+        return jdbcTemplate.queryForObject( sql, new SuperheroMapper(), id );
     }
 
     @Override
-    public Superhero updateSuperhero( Superhero superhero )
+    public Superhero updateSuperhero( int id, Superhero updatedSuperhero )
     {
-        return null;
+        final String sql = "UPDATE superhero SET " +
+            "name = ?, " +
+            "description = ?, " +
+            "superpower = ? " +
+            "WHERE id = ?;";
+
+        jdbcTemplate.update( sql,
+            updatedSuperhero.getName(),
+            updatedSuperhero.getDescription(),
+            updatedSuperhero.getSuperpower(),
+            id );
+
+        //TODO: add check for success
+        updatedSuperhero.setId( id );
+        return updatedSuperhero;
     }
 
     @Override
-    public Superhero deleteSuperheroById( int id )
+    public boolean deleteSuperheroById( int id )
     {
-        return null;
+        final String sql = "DELETE FROM superhero WHERE id = ?;";
+        return jdbcTemplate.update( sql, id ) > 0;
     }
 
     @Override
     public List<Superhero> getAllSuperheros()
     {
-        return null;
+        final String sql = "SELECT id, name, description, superpower FROM superhero;";
+        return jdbcTemplate.query( sql, new SuperheroMapper() );
     }
 
     @Override

@@ -27,13 +27,13 @@ public interface SuperheroServiceLayer
     //Superhero table Operations
     public Superhero addSuperhero( Superhero newSuperhero );
     public Superhero getSuperheroById( int id );
-    public Superhero updateSuperheroById( int id );
-    public Superhero deleteSuperheroById( int id );
+    public Superhero updateSuperhero( int id, Superhero updatedSuperhero );
+    public boolean deleteSuperheroById( int id );
     public List<Superhero> getAllSuperheros();
     public List<Organization> getAllOrganizationsBySuperheroId( int superheroId );
 
     //Organization table operations
-    public Organization addOrganization( String name, String description, String address, String email, String phone );
+    public Organization addOrganization( Organization newOrganization );
     public Organization getOrganizationById( int id );
     public Organization updateOrganizationById( int id );
     public Organization deleteOrganizationById( int id );

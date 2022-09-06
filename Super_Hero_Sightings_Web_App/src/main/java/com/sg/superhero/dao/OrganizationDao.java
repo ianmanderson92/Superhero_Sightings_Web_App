@@ -12,7 +12,17 @@
 
 package com.sg.superhero.dao;
 
+import com.sg.superhero.dto.Organization;
+
+import java.util.List;
+
 public interface OrganizationDao
 {
 
+    public Organization addOrganization( Organization newOrganization );
+    public Organization getOrganizationById( int id );
+    public Organization updateOrganization( int id, Organization updatedOrganization );
+    public boolean deleteOrganizationById( int id );
+    public List<Organization> getAllOrganizations();
+    
 }//End of OrganizationDao

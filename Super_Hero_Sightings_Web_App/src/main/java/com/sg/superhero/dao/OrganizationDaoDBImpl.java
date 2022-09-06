@@ -17,10 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.List;
 
 @Component
 @Profile( "database" )
@@ -33,6 +34,55 @@ public class OrganizationDaoDBImpl implements OrganizationDao
     public OrganizationDaoDBImpl( JdbcTemplate jdbcTemplate )
     {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public Organization addOrganization( Organization newOrganization )
+    {
+        final String sql = "INSERT INTO organization( name, description, address, email, phone )" +
+            " VALUES(?,?,?,?,?);";
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update( ( Connection connection ) ->
+        {
+            PreparedStatement prepStatement = connection.prepareStatement(
+                sql,
+                Statement.RETURN_GENERATED_KEYS );
+
+            prepStatement.setString( 1, newOrganization.getName() );
+            prepStatement.setString( 2, newOrganization.getDescription() );
+            prepStatement.setString( 3, newOrganization.getAddress() );
+            prepStatement.setString( 4, newOrganization.getEmail() );
+            prepStatement.setString( 5, newOrganization.getPhone() );
+            return prepStatement;
+        }, keyHolder );
+
+        newOrganization.setId( keyHolder.getKey().intValue() );
+        return newOrganization;
+    }
+
+    @Override
+    public Organization getOrganizationById( int id )
+    {
+        return null;
+    }
+
+    @Override
+    public Organization updateOrganization( int id, Organization updatedOrganization )
+    {
+        return null;
+    }
+
+    @Override
+    public boolean deleteOrganizationById( int id )
+    {
+        return false;
+    }
+
+    @Override
+    public List<Organization> getAllOrganizations()
+    {
+        return null;
     }
 
     private static final class OrganizationMapper implements RowMapper<Organization>

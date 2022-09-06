@@ -22,8 +22,8 @@ public interface SuperheroDao
 
     public Superhero addSuperhero( Superhero superhero );
     public Superhero getSuperheroById( int id );
-    public Superhero updateSuperhero( Superhero superhero );
-    public Superhero deleteSuperheroById( int id );
+    public Superhero updateSuperhero( int id, Superhero superhero );
+    public boolean deleteSuperheroById( int id );
     public List<Superhero> getAllSuperheros();
 
     //TODO: consider different implementation

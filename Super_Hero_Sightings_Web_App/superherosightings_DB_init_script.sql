@@ -83,8 +83,8 @@ DROP TABLE IF EXISTS `superhero`;
 CREATE TABLE `superhero` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
-  `description` varchar(150) DEFAULT 'Unknown',
-  `superpower` varchar(60) DEFAULT 'Unknown',
+  `description` varchar(450) DEFAULT 'Unknown',
+  `superpower` varchar(450) DEFAULT 'Unknown',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;

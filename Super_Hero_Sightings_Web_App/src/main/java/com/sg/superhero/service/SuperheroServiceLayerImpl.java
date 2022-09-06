@@ -12,10 +12,7 @@
 
 package com.sg.superhero.service;
 
-import com.sg.superhero.dao.LocationDao;
-import com.sg.superhero.dao.OrganizationDao;
-import com.sg.superhero.dao.SightingDao;
-import com.sg.superhero.dao.SuperheroDao;
+import com.sg.superhero.dao.*;
 import com.sg.superhero.dto.Location;
 import com.sg.superhero.dto.Organization;
 import com.sg.superhero.dto.Sighting;
@@ -61,25 +58,27 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Superhero getSuperheroById( int id )
     {
-        return null;
+        //TODO: add validation for id
+        return superheroDao.getSuperheroById( id );
     }
 
     @Override
-    public Superhero updateSuperheroById( int id )
+    public Superhero updateSuperhero( int id, Superhero updatedSuperhero )
     {
-        return null;
+        //TODO: validate updatedSuperhero
+        return superheroDao.updateSuperhero( id, updatedSuperhero );
     }
 
     @Override
-    public Superhero deleteSuperheroById( int id )
+    public boolean deleteSuperheroById( int id )
     {
-        return null;
+        return superheroDao.deleteSuperheroById( id );
     }
 
     @Override
     public List<Superhero> getAllSuperheros()
     {
-        return null;
+        return superheroDao.getAllSuperheros();
     }
 
     @Override
@@ -89,9 +88,10 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     }
 
     @Override
-    public Organization addOrganization( String name, String description, String address, String email, String phone )
+    public Organization addOrganization( Organization newOrganization )
     {
-        return null;
+        //TODO: add validation
+        return organizationDao.addOrganization( newOrganization );
     }
 
     @Override
@@ -214,4 +214,6 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     {
         return null;
     }
-}
+
+
+}//End if SuperheroServiceLayerImpl
