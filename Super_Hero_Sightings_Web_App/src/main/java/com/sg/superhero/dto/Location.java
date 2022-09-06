@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 public class Location
@@ -31,6 +32,9 @@ public class Location
     private String address;
     private BigDecimal latitude;
     private BigDecimal longitude;
+
+    //Optional Member Variables
+    private List<Superhero> superherosSightedAtLocation;
 
     public Location()
     {
@@ -128,20 +132,5 @@ public class Location
         return Objects.hash( id, name, description, address, latitude, longitude );
     }
 
-    private static final class LocationMapper implements RowMapper<Location>
-    {
-        @Override
-        public Location mapRow( ResultSet resultSet, int index ) throws SQLException
-        {
-            Location locationObj = new Location();
-            locationObj.setId( resultSet.getInt( "id" ) );
-            locationObj.setName( resultSet.getString( "name" ) );
-            locationObj.setDescription( resultSet.getString( "description" ) );
-            locationObj.setAddress( resultSet.getString( "address" ) );
-            locationObj.setLatitude( resultSet.getBigDecimal( "latitude" ) );
-            locationObj.setLongitude( resultSet.getBigDecimal( "longitude" ) );
-            return locationObj;
-        }
-    }//End of LocationMapper
 
 }//End of Location

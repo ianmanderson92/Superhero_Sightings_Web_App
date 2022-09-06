@@ -126,18 +126,4 @@ public class Superhero
         return Objects.hash( id, name, description, superpower );
     }
 
-    private static final class SuperheroMapper implements RowMapper<Superhero>
-    {
-        @Override
-        public Superhero mapRow( ResultSet resultSet, int index ) throws SQLException
-        {
-            Superhero superheroObj = new Superhero();
-            superheroObj.setId( resultSet.getInt( "id" ) );
-            superheroObj.setName( resultSet.getString( "name" ) );
-            superheroObj.setDescription( resultSet.getString( "description" ) );
-            superheroObj.setSuperpower( resultSet.getString( "superpower" ) );
-            return superheroObj;
-        }
-    }//End of SuperheroMapper
-
 }//End of Superhero

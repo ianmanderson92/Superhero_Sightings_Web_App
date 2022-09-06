@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Objects;
 
 public class Organization
@@ -29,6 +30,9 @@ public class Organization
     private String address;
     private String email;
     private String phone;
+
+    //Optional Member Variables
+    private List<Superhero> membersOfOrganization;
 
     public Organization()
     {
@@ -126,20 +130,5 @@ public class Organization
         return Objects.hash( id, name, description, address, email, phone );
     }
 
-    private static final class OrganizationMapper implements RowMapper<Organization>
-    {
-        @Override
-        public Organization mapRow( ResultSet resultSet, int index ) throws SQLException
-        {
-            Organization organizationObj = new Organization();
-            organizationObj.setId( resultSet.getInt( "id" ) );
-            organizationObj.setName( resultSet.getString( "name" ) );
-            organizationObj.setDescription( resultSet.getString( "description" ) );
-            organizationObj.setAddress( resultSet.getString( "address" ) );
-            organizationObj.setEmail( resultSet.getString( "email" ) );
-            organizationObj.setPhone( resultSet.getString( "phone" ) );
-            return organizationObj;
-        }
-    }//End of OrganizationMapper
     
 }//End of Organization

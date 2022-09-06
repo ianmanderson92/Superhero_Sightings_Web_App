@@ -25,12 +25,12 @@ import java.util.List;
 public interface SuperheroServiceLayer
 {
     //Superhero table Operations
-    public Superhero addSuperhero( String name, String description, String superpower );
+    public Superhero addSuperhero( Superhero newSuperhero );
     public Superhero getSuperheroById( int id );
     public Superhero updateSuperheroById( int id );
     public Superhero deleteSuperheroById( int id );
     public List<Superhero> getAllSuperheros();
-    public List<Organization> getAllOrganizationsBySuperheroId( int id );
+    public List<Organization> getAllOrganizationsBySuperheroId( int superheroId );
 
     //Organization table operations
     public Organization addOrganization( String name, String description, String address, String email, String phone );

@@ -103,18 +103,6 @@ public class Sighting
         return Objects.hash( id, heroId, locationId, date );
     }
 
-    private static final class SightingMapper implements RowMapper<Sighting>
-    {
-        @Override
-        public Sighting mapRow( ResultSet resultSet, int index ) throws SQLException
-        {
-            Sighting sightingObj = new Sighting();
-            sightingObj.setId( resultSet.getInt( "id" ) );
-            sightingObj.setHeroId( resultSet.getInt( "heroId" ) );
-            sightingObj.setLocationId( resultSet.getInt( "locationId" ) );
-            sightingObj.setDate( resultSet.getDate( "date" ) );
-            return sightingObj;
-        }
-    }//End of SightingMapper
+
     
 }//End of Sighting
