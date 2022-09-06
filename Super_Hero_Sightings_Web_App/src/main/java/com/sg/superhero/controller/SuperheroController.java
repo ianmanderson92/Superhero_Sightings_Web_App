@@ -20,7 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/superhero")
@@ -66,16 +69,8 @@ public class SuperheroController
         {
             return new ResponseEntity( null, HttpStatus.NOT_FOUND );
         }
-        /*
-        else if ( superheroId != updatedSuperhero.getId() )
-        {
-            return new ResponseEntity( null, HttpStatus.BAD_REQUEST );
-        }
-        */
-        else
-        {
-            updatedSuperhero = service.updateSuperhero( superheroId, updatedSuperhero );
-        }
+
+        updatedSuperhero = service.updateSuperhero( superheroId, updatedSuperhero );
         return ResponseEntity.ok( updatedSuperhero );
     }
 
@@ -170,4 +165,86 @@ public class SuperheroController
     {
         return service.getAllOrganizations();
     }
+
+    @PostMapping( "/addSuperheroToOrg/{superheroId}/{organizationId}" )
+    public ResponseEntity<String> addSuperheroToOrganization( @PathVariable int superheroId, @PathVariable int organizationId )
+    {
+        Superhero foundSuperhero = service.getSuperheroById( superheroId );
+        if ( foundSuperhero == null )
+        {
+            //TODO: fix error not triggering properly
+            return new ResponseEntity<String>( "Superhero not found in DB.", HttpStatus.NOT_FOUND );
+        }
+
+        Organization foundOrg = service.getOrganizationById( organizationId );
+        if( foundOrg == null )
+        {
+            return new ResponseEntity<String>( "Organization not found in DB.", HttpStatus.NOT_FOUND );
+        }
+
+        boolean isSuccessful = service.addSuperheroToOrganization( superheroId, organizationId );
+        if ( isSuccessful )
+        {
+            return new ResponseEntity<String>( foundSuperhero.getName() + " was added to the " +
+                foundOrg.getName() + " Organization.", HttpStatus.OK );
+        }
+        return new ResponseEntity<String>( "Error occured adding to Bridge table despite both " +
+            "objects being found.", HttpStatus.CONFLICT );
+    }
+
+    @DeleteMapping( "/removeSuperheroFromOrg/{superheroId}/{organizationId}" )
+    public ResponseEntity<String> removeSuperheroFromOrganization( @PathVariable int superheroId, @PathVariable int organizationId )
+    {
+        Superhero foundSuperhero = service.getSuperheroById( superheroId );
+        if ( foundSuperhero == null )
+        {
+            //TODO: fix error not triggering properly
+            return new ResponseEntity<String>( "Superhero not found in DB.", HttpStatus.NOT_FOUND );
+        }
+
+        Organization foundOrg = service.getOrganizationById( organizationId );
+        if( foundOrg == null )
+        {
+            return new ResponseEntity<String>( "Organization not found in DB.", HttpStatus.NOT_FOUND );
+        }
+
+        boolean isSuccessful = service.removeSuperheroFromOrganization( superheroId, organizationId );
+        if ( isSuccessful )
+        {
+            return new ResponseEntity<String>( foundSuperhero.getName() + " was removed from the " +
+                foundOrg.getName() + " Organization.", HttpStatus.OK );
+        }
+        return new ResponseEntity<String>( "Error occured removing from Bridge table despite both " +
+            "objects being found.", HttpStatus.CONFLICT );
+    }
+
+    //TODO: possibly switch for second half of Project.
+    /*
+    @GetMapping( "/getAllOrgMembers/{organizationId}" )
+    public List<Superhero> getAllOrgMembers( @PathVariable int organizationId )
+    {
+        List<Integer> returnedHeroIds = service.getAllMembersByOrganizationId( organizationId );
+        List<Superhero> returnedSuperheroSet = new ArrayList<Superhero>();
+        for ( Integer superheroId : returnedHeroIds )
+        {
+            returnedSuperheroSet.add( service.getSuperheroById( superheroId ) );
+        }
+        return returnedSuperheroSet;
+    }
+    */
+
+    @GetMapping( "/getAllOrgMembers/{organizationId}" )
+    public Map<String, List<Superhero>> getAllOrgMembers( @PathVariable int organizationId )
+    {
+        List<Integer> returnedHeroIds = service.getAllMembersByOrganizationId( organizationId );
+        List<Superhero> returnedSuperheroSet = new ArrayList<Superhero>();
+        for ( Integer superheroId : returnedHeroIds )
+        {
+            returnedSuperheroSet.add( service.getSuperheroById( superheroId ) );
+        }
+        Map<String, List<Superhero>> responseMap = new HashMap<>();
+        responseMap.put( "Superheros from Organization: " + service.getOrganizationById( organizationId ).getName(), returnedSuperheroSet );
+        return responseMap;
+    }
+
 }//END of SuperheroController

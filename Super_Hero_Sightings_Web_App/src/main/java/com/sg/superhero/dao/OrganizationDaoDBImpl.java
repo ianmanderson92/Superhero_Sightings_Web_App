@@ -13,7 +13,6 @@
 package com.sg.superhero.dao;
 
 import com.sg.superhero.dto.Organization;
-import com.sg.superhero.dto.Superhero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -112,19 +111,46 @@ public class OrganizationDaoDBImpl implements OrganizationDao
     @Override
     public Boolean addSuperheroToOrganization( int superheroId, int organizationId )
     {
-        return null;
+        final String sql = "INSERT INTO superhero_br_organization( superheroId, organizationId )" +
+            " VALUES(?,?);";
+
+        int newRows = jdbcTemplate.update( ( Connection connection ) ->
+        {
+            PreparedStatement prepStatement = connection.prepareStatement(
+                sql);
+
+            prepStatement.setInt( 1, superheroId );
+            prepStatement.setInt( 2, organizationId );
+            return prepStatement;
+        } );
+
+        return newRows > 0;
     }
 
     @Override
-    public Boolean removeSuperheroFromOrganization( int superheroId, int organizationId )
+    public boolean removeSuperheroFromOrganization( int superheroId, int organizationId )
     {
-        return null;
+        final String sql = "DELETE FROM superhero_br_organization WHERE superheroId = ? AND organizationId = ?;";
+
+        int removedRows = jdbcTemplate.update( ( Connection connection ) ->
+        {
+            PreparedStatement prepStatement = connection.prepareStatement(
+                sql);
+
+            prepStatement.setInt( 1, superheroId );
+            prepStatement.setInt( 2, organizationId );
+            return prepStatement;
+        } );
+
+        return removedRows > 0;
     }
 
     @Override
-    public List<Superhero> getAllMembersByOrganizationId( int id )
+    public List<Integer> getAllMembersByOrganizationId( int id )
     {
-        return null;
+        final String sql = "SELECT superheroId FROM superhero_br_organization WHERE organizationId = ?;";
+
+        return jdbcTemplate.queryForList( sql, Integer.class, id );
     }
 
     private static final class OrganizationMapper implements RowMapper<Organization>

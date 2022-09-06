@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "f2581888-6460-47c4-bb14-01bc083af744",
+		"name": "SuperHeroSightingsAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Superhero Functions",
+			"item": [
+				{
+					"name": "addSuperhero()",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Superman\",\r\n    \"description\": \"Very strong man from another planet\",\r\n    \"superpower\": \"Flying, Bulletproof, Heat Vision, Super Strength\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/api/superhero/addSuperhero",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"addSuperhero"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSuperheroById()",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "updateSuperheroById()",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/superhero/updateSuperhero/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"updateSuperhero",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSuperheroById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/deleteSuperhero/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"deleteSuperhero",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllSuperheros",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Organization Functions",
+			"item": [
+				{
+					"name": "addOrganization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"X-men copy\",\r\n    \"description\": \"Group of super mutants.\",\r\n    \"address\": \"Secret house somewhere in midwest.\",\r\n    \"email\": \"charles@xmen.com\",\r\n    \"phone\": \"1-800-we-are-mutants\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/superhero/addOrganization",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"addOrganization"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOrganizationById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getOrganization/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getOrganization",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateOrganizationById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"X-men\",\r\n    \"description\": \"Group of super mutants.\",\r\n    \"address\": \"Secret house somewhere in midwest.\",\r\n    \"email\": \"charles@xmen.com\",\r\n    \"phone\": \"1-800-we-are-mutants\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/superhero/updateOrganization/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"updateOrganization",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOrganizationById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/deleteOrganization/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"deleteOrganization",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOrganizations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getAllOrganizations",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getAllOrganizations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addSuperheroToOrganization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/addSuperheroToOrg/2/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"addSuperheroToOrg",
+								"2",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

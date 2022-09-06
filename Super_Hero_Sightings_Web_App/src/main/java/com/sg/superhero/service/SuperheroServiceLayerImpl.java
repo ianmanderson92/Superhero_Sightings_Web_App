@@ -20,7 +20,6 @@ import com.sg.superhero.dto.Superhero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -122,24 +121,23 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Boolean addSuperheroToOrganization( int superheroId, int organizationId )
     {
-        return null;
+        return organizationDao.addSuperheroToOrganization( superheroId, organizationId );
     }
 
     @Override
     public Boolean removeSuperheroFromOrganization( int superheroId, int organizationId )
     {
-        return null;
+        return organizationDao.removeSuperheroFromOrganization( superheroId, organizationId );
     }
 
     @Override
-    public List<Superhero> getAllMembersByOrganizationId( int id )
+    public List<Integer> getAllMembersByOrganizationId( int id )
     {
-        return null;
+        return organizationDao.getAllMembersByOrganizationId( id );
     }
 
     @Override
-    public Location addLocation( String name, String description, String address, BigDecimal latitude,
-                                 BigDecimal longitude )
+    public Location addLocation( Location newLocation )
     {
         return null;
     }

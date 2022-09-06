@@ -18,7 +18,6 @@ import com.sg.superhero.dto.Organization;
 import com.sg.superhero.dto.Sighting;
 import com.sg.superhero.dto.Superhero;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -40,10 +39,10 @@ public interface SuperheroServiceLayer
     public List<Organization> getAllOrganizations();
     public Boolean addSuperheroToOrganization( int superheroId, int organizationId );
     public Boolean removeSuperheroFromOrganization( int superheroId, int organizationId );
-    public List<Superhero> getAllMembersByOrganizationId( int id );
+    public List<Integer> getAllMembersByOrganizationId( int id );
 
     //Location table Operations
-    public Location addLocation( String name, String description, String address, BigDecimal latitude, BigDecimal longitude );
+    public Location addLocation( Location newLocation );
     public Location getLocationById( int id );
     public Location updateLocationById( int id );
     public Location deleteLocationById( int id );

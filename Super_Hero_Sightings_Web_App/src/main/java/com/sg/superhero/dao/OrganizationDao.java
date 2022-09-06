@@ -13,7 +13,6 @@
 package com.sg.superhero.dao;
 
 import com.sg.superhero.dto.Organization;
-import com.sg.superhero.dto.Superhero;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public interface OrganizationDao
     public boolean deleteOrganizationById( int id );
     public List<Organization> getAllOrganizations();
     public Boolean addSuperheroToOrganization( int superheroId, int organizationId );
-    public Boolean removeSuperheroFromOrganization( int superheroId, int organizationId );
-    public List<Superhero> getAllMembersByOrganizationId( int id );
+    public boolean removeSuperheroFromOrganization( int superheroId, int organizationId );
+    public List<Integer> getAllMembersByOrganizationId( int id );
     
 }//End of OrganizationDao
