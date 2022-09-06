@@ -12,7 +12,16 @@
 
 package com.sg.superhero.dao;
 
+import com.sg.superhero.dto.Sighting;
+
+import java.util.List;
+
 public interface SightingDao
 {
-
+    public Sighting addSighting( Sighting newSighting );
+    public Sighting getSightingById( int id );
+    public Sighting updateSighting( int id, Sighting updatedSighting );
+    public boolean deleteSightingById( int id );
+    public List<Sighting> getAllSightings();
+    
 }//End of SightingDao

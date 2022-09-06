@@ -42,6 +42,10 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
         this.sightingDao = sightingDao;
     }
 
+
+    //Superhero Methods
+    //--------------------------------------------------------------------------------------------------------------------
+    
     @Override
     public Superhero addSuperhero( Superhero newSuperhero )
     {
@@ -86,6 +90,10 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
         return null;
     }
 
+
+    //Organization Methods
+    //--------------------------------------------------------------------------------------------------------------------
+    
     @Override
     public Organization addOrganization( Organization newOrganization )
     {
@@ -136,64 +144,72 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
         return organizationDao.getAllMembersByOrganizationId( id );
     }
 
+
+    //Location Methods
+    //--------------------------------------------------------------------------------------------------------------------
+    
     @Override
     public Location addLocation( Location newLocation )
     {
-        return null;
+        return locationDao.addLocation( newLocation );
     }
 
     @Override
     public Location getLocationById( int id )
     {
-        return null;
+        return locationDao.getLocationById( id );
     }
 
     @Override
-    public Location updateLocationById( int id )
+    public Location updateLocation( int id, Location updatedLocation )
     {
-        return null;
+        return locationDao.updateLocation( id, updatedLocation );
     }
 
     @Override
-    public Location deleteLocationById( int id )
+    public boolean deleteLocationById( int id )
     {
-        return null;
+        return locationDao.deleteLocationById( id );
     }
 
     @Override
     public List<Location> getAllLocations()
     {
-        return null;
+        return locationDao.getAllLocations();
     }
 
+    
+    //Sighting Methods
+    //--------------------------------------------------------------------------------------------------------------------
+    
     @Override
-    public Sighting addSighting( int superheroId, int locationId, Date date )
+    public Sighting addSighting( Sighting newSighting )
     {
-        return null;
+        return sightingDao.addSighting( newSighting );
     }
 
     @Override
     public Sighting getSightingById( int id )
     {
-        return null;
+        return sightingDao.getSightingById( id );
     }
 
     @Override
-    public Sighting updateSightingById( int id )
+    public Sighting updateSighting( int id, Sighting updatedSighting )
     {
-        return null;
+        return sightingDao.updateSighting( id, updatedSighting );
     }
 
     @Override
-    public Sighting deleteSightingById( int id )
+    public boolean deleteSightingById( int id )
     {
-        return null;
+        return sightingDao.deleteSightingById( id );
     }
 
     @Override
     public List<Sighting> getAllSightings()
     {
-        return null;
+        return sightingDao.getAllSightings();
     }
 
     @Override

@@ -12,7 +12,9 @@
 
 package com.sg.superhero.controller;
 
+import com.sg.superhero.dto.Location;
 import com.sg.superhero.dto.Organization;
+import com.sg.superhero.dto.Sighting;
 import com.sg.superhero.dto.Superhero;
 import com.sg.superhero.service.SuperheroServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +115,7 @@ public class SuperheroController
     @PostMapping( "/addOrganization" )
     public Organization addOrganization( @RequestBody Organization newOrganization )
     {
+        //TODO: add validation
         return service.addOrganization( newOrganization );
     }
     
@@ -218,7 +221,7 @@ public class SuperheroController
             "objects being found.", HttpStatus.CONFLICT );
     }
 
-    //TODO: possibly switch for second half of Project.
+    //TODO: possibly switch implementations for  second half of Project.
     /*
     @GetMapping( "/getAllOrgMembers/{organizationId}" )
     public List<Superhero> getAllOrgMembers( @PathVariable int organizationId )
@@ -247,4 +250,122 @@ public class SuperheroController
         return responseMap;
     }
 
+    //Locatiop Methods
+    //--------------------------------------------------------------------------------------------------------------------
+
+    @PostMapping( "/addLocation" )
+    public Location addLocation( @RequestBody Location newLocation )
+    {
+        return service.addLocation( newLocation );
+    }
+
+    @GetMapping( "/getLocation/{locationId}" )
+    public ResponseEntity<Location> getLocationById( @PathVariable int locationId )
+    {
+        Location foundLocation = service.getLocationById( locationId );
+        if ( foundLocation == null )
+        {
+            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
+        }
+        return ResponseEntity.ok( foundLocation );
+    }
+
+    @PutMapping( "/updateLocation/{locationId}" )
+    public ResponseEntity<Location> updateLocationById( @PathVariable int locationId
+        , @RequestBody Location updatedLocation )
+    {
+        Location foundLocation = service.getLocationById( locationId );
+        if ( foundLocation == null )
+        {
+            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
+        }
+        updatedLocation = service.updateLocation( locationId, updatedLocation );
+        return ResponseEntity.ok( updatedLocation );
+    }
+
+    @DeleteMapping( "/deleteLocation/{locationId}" )
+    public ResponseEntity<String> deleteLocationById( @PathVariable int locationId )
+    {
+        Location foundLocation = service.getLocationById( locationId );
+        if ( foundLocation == null )
+        {
+            return new ResponseEntity( "Location not found.", HttpStatus.NOT_FOUND );
+        }
+
+        boolean isSuccessful = service.deleteLocationById( locationId );
+        if( isSuccessful )
+        {
+            return ResponseEntity.ok( foundLocation.getName() + " deleted successfully." );
+        }
+        else
+        {
+            return new ResponseEntity( "Error occured while deleting Location.", HttpStatus.CONFLICT );
+        }
+    }
+
+    @GetMapping( "/getAllLocations" )
+    public List<Location> getAllLocations()
+    {
+        return service.getAllLocations();
+    }
+
+    //Sighting Functions
+    //-----------------------------------------------------------------------------------------------------------------
+
+    @PostMapping( "/addSighting" )
+    public Sighting addSighting( @RequestBody Sighting newSighting )
+    {
+        return service.addSighting( newSighting );
+    }
+
+    @GetMapping( "/getSighting/{sightingId}" )
+    public ResponseEntity<Sighting> getSightingById( @PathVariable int sightingId )
+    {
+        Sighting foundSighting = service.getSightingById( sightingId );
+        if ( foundSighting == null )
+        {
+            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
+        }
+        return ResponseEntity.ok( foundSighting );
+    }
+
+    @PutMapping( "/updateSighting/{sightingId}" )
+    public ResponseEntity<Sighting> updateSightingById( @PathVariable int sightingId
+        , @RequestBody Sighting updatedSighting )
+    {
+        Sighting foundSighting = service.getSightingById( sightingId );
+        if ( foundSighting == null )
+        {
+            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
+        }
+        updatedSighting = service.updateSighting( sightingId, updatedSighting );
+        return ResponseEntity.ok( updatedSighting );
+    }
+
+    @DeleteMapping( "/deleteSighting/{sightingId}" )
+    public ResponseEntity<String> deleteSightingById( @PathVariable int sightingId )
+    {
+        Sighting foundSighting = service.getSightingById( sightingId );
+        if ( foundSighting == null )
+        {
+            return new ResponseEntity( "Sighting not found.", HttpStatus.NOT_FOUND );
+        }
+
+        boolean isSuccessful = service.deleteSightingById( sightingId );
+        if( isSuccessful )
+        {
+            return ResponseEntity.ok( "Sighting " + foundSighting.getId() + " deleted successfully." );
+        }
+        else
+        {
+            return new ResponseEntity( "Error occured while deleting Sighting.", HttpStatus.CONFLICT );
+        }
+    }
+
+    @GetMapping( "/getAllSightings" )
+    public List<Sighting> getAllSightings()
+    {
+        return service.getAllSightings();
+    }
+    
 }//END of SuperheroController

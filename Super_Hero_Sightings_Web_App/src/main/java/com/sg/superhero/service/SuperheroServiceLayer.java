@@ -44,15 +44,15 @@ public interface SuperheroServiceLayer
     //Location table Operations
     public Location addLocation( Location newLocation );
     public Location getLocationById( int id );
-    public Location updateLocationById( int id );
-    public Location deleteLocationById( int id );
+    public Location updateLocation( int id, Location updatedLocation );
+    public boolean deleteLocationById( int id );
     public List<Location> getAllLocations();
 
     //Sighting table operations
-    public Sighting addSighting( int superheroId, int locationId, Date date );
+    public Sighting addSighting( Sighting newSighting );
     public Sighting getSightingById( int id );
-    public Sighting updateSightingById( int id );
-    public Sighting deleteSightingById( int id );
+    public Sighting updateSighting( int id, Sighting updatedSighting );
+    public boolean deleteSightingById( int id );
     public List<Sighting> getAllSightings();
     public List<Sighting> getAllSightingsByDate( Date date );
     public List<Location> getAllSightingLocationsBySuperheroId( int superheroId );

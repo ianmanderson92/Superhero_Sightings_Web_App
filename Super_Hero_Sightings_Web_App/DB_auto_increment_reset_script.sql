@@ -1,0 +1,1 @@
+ALTER TABLE location AUTO_INCREMENT = 1

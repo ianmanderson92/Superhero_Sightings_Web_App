@@ -12,11 +12,8 @@
 
 package com.sg.superhero.dto;
 
-import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public class Sighting

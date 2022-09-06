@@ -12,7 +12,17 @@
 
 package com.sg.superhero.dao;
 
+import com.sg.superhero.dto.Location;
+
+import java.util.List;
+
 public interface LocationDao
 {
+
+    public Location addLocation( Location newLocation );
+    public Location getLocationById( int id );
+    public Location updateLocation( int id, Location updatedLocation );
+    public boolean deleteLocationById( int id );
+    public List<Location> getAllLocations();
 
 }//End of LocationDao
