@@ -35,8 +35,8 @@ public interface SuperheroServiceLayer
     //Organization table operations
     public Organization addOrganization( Organization newOrganization );
     public Organization getOrganizationById( int id );
-    public Organization updateOrganizationById( int id );
-    public Organization deleteOrganizationById( int id );
+    public Organization updateOrganization( int id, Organization updatedOrganization );
+    public boolean deleteOrganizationById( int id );
     public List<Organization> getAllOrganizations();
     public Boolean addSuperheroToOrganization( int superheroId, int organizationId );
     public Boolean removeSuperheroFromOrganization( int superheroId, int organizationId );

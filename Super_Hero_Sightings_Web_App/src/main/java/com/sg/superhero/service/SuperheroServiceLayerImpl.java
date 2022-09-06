@@ -97,25 +97,26 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Organization getOrganizationById( int id )
     {
-        return null;
+        return organizationDao.getOrganizationById( id );
     }
 
     @Override
-    public Organization updateOrganizationById( int id )
+    public Organization updateOrganization( int id, Organization updatedOrganization )
     {
-        return null;
+        //TODO: validate updatedOrganization
+        return organizationDao.updateOrganization( id, updatedOrganization );
     }
 
     @Override
-    public Organization deleteOrganizationById( int id )
+    public boolean deleteOrganizationById( int id )
     {
-        return null;
+        return organizationDao.deleteOrganizationById( id );
     }
 
     @Override
     public List<Organization> getAllOrganizations()
     {
-        return null;
+        return organizationDao.getAllOrganizations();
     }
 
     @Override

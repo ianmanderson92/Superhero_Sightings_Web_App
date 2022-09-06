@@ -27,8 +27,8 @@ DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `description` varchar(150) DEFAULT 'Unknown',
-  `address` varchar(150) NOT NULL,
+  `description` varchar(450) DEFAULT 'Unknown',
+  `address` varchar(450) NOT NULL,
   `latitude` decimal(10,8) NOT NULL,
   `longitude` decimal(11,8) NOT NULL,
   PRIMARY KEY (`id`)
@@ -45,12 +45,12 @@ DROP TABLE IF EXISTS `organization`;
 CREATE TABLE `organization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `description` varchar(150) DEFAULT 'Unknown',
-  `address` varchar(150) NOT NULL,
+  `description` varchar(450) DEFAULT 'Unknown',
+  `address` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `phone` varchar(20) NOT NULL,
+  `phone` varchar(25) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,8 +68,8 @@ CREATE TABLE `sightings` (
   PRIMARY KEY (`id`),
   KEY `fk_heroId` (`heroId`),
   KEY `fk_locationId` (`locationId`),
-  CONSTRAINT `fk_heroId` FOREIGN KEY (`heroId`) REFERENCES `superhero` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_locationId` FOREIGN KEY (`locationId`) REFERENCES `location` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_heroId` FOREIGN KEY (`heroId`) REFERENCES `superhero` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_locationId` FOREIGN KEY (`locationId`) REFERENCES `location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -86,7 +86,7 @@ CREATE TABLE `superhero` (
   `description` varchar(450) DEFAULT 'Unknown',
   `superpower` varchar(450) DEFAULT 'Unknown',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,18 +101,30 @@ CREATE TABLE `superhero_br_organization` (
   `organizationId` int(11) NOT NULL,
   PRIMARY KEY (`superheroId`,`organizationId`),
   KEY `fk_organizationId` (`organizationId`),
-  CONSTRAINT `fk_organizationId` FOREIGN KEY (`organizationId`) REFERENCES `organization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_superheroId` FOREIGN KEY (`superheroId`) REFERENCES `superhero` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_organizationId` FOREIGN KEY (`organizationId`) REFERENCES `organization` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_superheroId` FOREIGN KEY (`superheroId`) REFERENCES `superhero` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*
+ * @Author: Ian Anderson
+ * @Mailto: ianmanderson92@gmail.com
+ * @Modified: 9/6/22, 6:26 AM
+ * All Rights Reserved.
+ *
+ * @Project: Super_Hero_Sightings_Web_App
+ * @Class_Name: superherosightings_DB_init_script_ianmanderson92.sql
+ * @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero Web App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/superherosightings_DB_init_script_ianmanderson92.sql
+ * @File_Name: superherosightings_DB_init_script_ianmanderson92.sql
+ */
+
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-05 22:54:14
+-- Dump completed on 2022-09-06  6:26:49

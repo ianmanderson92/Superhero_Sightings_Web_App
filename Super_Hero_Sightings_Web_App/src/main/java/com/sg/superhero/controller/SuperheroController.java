@@ -121,4 +121,53 @@ public class SuperheroController
         return service.addOrganization( newOrganization );
     }
     
-}//ENd of SuperheroController
+    @GetMapping( "/getOrganization/{organizationId}" )
+    public ResponseEntity<Organization> getOrganizationById( @PathVariable int organizationId )
+    {
+        Organization foundOrganization = service.getOrganizationById( organizationId );
+        if ( foundOrganization == null )
+        {
+            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
+        }
+        return ResponseEntity.ok( foundOrganization );
+    }
+
+    @PutMapping( "/updateOrganization/{organizationId}" )
+    public ResponseEntity<Organization> updateOrganizationById( @PathVariable int organizationId
+        , @RequestBody Organization updatedOrganization )
+    {
+        Organization foundOrganization = service.getOrganizationById( organizationId );
+        if ( foundOrganization == null )
+        {
+            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
+        }
+        updatedOrganization = service.updateOrganization( organizationId, updatedOrganization );
+        return ResponseEntity.ok( updatedOrganization );
+    }
+
+    @DeleteMapping( "/deleteOrganization/{organizationId}" )
+    public ResponseEntity<String> deleteOrganizationById( @PathVariable int organizationId )
+    {
+        Organization foundOrganization = service.getOrganizationById( organizationId );
+        if ( foundOrganization == null )
+        {
+            return new ResponseEntity( "Organization not found.", HttpStatus.NOT_FOUND );
+        }
+
+        boolean isSuccessful = service.deleteOrganizationById( organizationId );
+        if( isSuccessful )
+        {
+            return ResponseEntity.ok( foundOrganization.getName() + " deleted successfully." );
+        }
+        else
+        {
+            return new ResponseEntity( "Error occured while deleting Organization.", HttpStatus.CONFLICT );
+        }
+    }
+
+    @GetMapping( "/getAllOrganizations" )
+    public List<Organization> getAllOrganizations()
+    {
+        return service.getAllOrganizations();
+    }
+}//END of SuperheroController
