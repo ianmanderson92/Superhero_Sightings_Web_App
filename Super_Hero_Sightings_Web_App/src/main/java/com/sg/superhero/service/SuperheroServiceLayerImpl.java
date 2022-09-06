@@ -1,5 +1,8 @@
 package com.sg.superhero.service;
 
-public class SuperheroServiceLayerImpl
+import org.springframework.stereotype.Service;
+
+@Service
+public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
 {
 }
