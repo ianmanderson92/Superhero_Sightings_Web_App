@@ -14,12 +14,8 @@ package com.sg.superhero.dto;
 
 
 import com.sg.superhero.dao.InputValidationException;
-import org.apache.tomcat.jni.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.*;
 

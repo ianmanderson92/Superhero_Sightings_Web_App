@@ -13,10 +13,7 @@
 package com.sg.superhero.dto;
 
 import com.sg.superhero.dao.InputValidationException;
-import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -1,7 +1,7 @@
 /*
  * @Author: Ian Anderson
  * @Mailto: ianmanderson92@gmail.com
- * @Modified: 9/6/22, 4:58 AM
+ * @Modified: 9/8/22, 4:32 AM
  * All Rights Reserved.
  *
  * @Project: Super_Hero_Sightings_Web_App
@@ -12,414 +12,97 @@
 
 package com.sg.superhero.controller;
 
-import com.sg.superhero.dto.Location;
-import com.sg.superhero.dto.Organization;
-import com.sg.superhero.dto.Sighting;
+import com.sg.superhero.dao.LocationDao;
+import com.sg.superhero.dao.OrganizationDao;
+import com.sg.superhero.dao.SightingDao;
+import com.sg.superhero.dao.SuperheroDao;
 import com.sg.superhero.dto.Superhero;
 import com.sg.superhero.service.SuperheroServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
-@RestController
-@RequestMapping("/api/superhero")
+@Controller
 public class SuperheroController
 {
+
     @Autowired
-    private final SuperheroServiceLayer service;
+    SuperheroDao superheroDao;
 
-    public SuperheroController( SuperheroServiceLayer service )
+    @Autowired
+    OrganizationDao organizationDao;
+
+    @Autowired
+    LocationDao locationDao;
+
+    @Autowired
+    SightingDao sightingDao;
+
+    @Autowired
+    SuperheroServiceLayer serviceLayer;
+
+    @Autowired
+    RESTController restController;
+
+    @GetMapping("superheros")
+    public String displaySuperheros( Model model )
     {
-        this.service = service;
+        List<Superhero> superheroList = serviceLayer.getAllSuperheros();
+        model.addAttribute( "superheros", superheroList );
+        return "superheros";
     }
 
-
-    //Superhero Methods
-    //--------------------------------------------------------------------------------------------
-    @PostMapping( "/addSuperhero" )
-    public Superhero addSuperhero( @RequestBody Superhero newSuperhero )
+    @PostMapping( "addSuperhero" )
+    public String addSuperhero ( HttpServletRequest request )
     {
-        Superhero addedSuperHero = service.addSuperhero( newSuperhero );
-        return addedSuperHero;
+        String name = request.getParameter( "name" );
+        String description = request.getParameter( "description" );
+        String superpower = request.getParameter( "superpower" );
+
+        Superhero newSuperhero = new Superhero( name, description, superpower );
+        serviceLayer.addSuperhero( newSuperhero );
+
+        return "redirect:/superheros";
     }
 
-    @GetMapping( "/getSuperhero/{superheroId}" )
-    public ResponseEntity<Superhero> getSuperheroById ( @PathVariable int superheroId )
+    @GetMapping("deleteSuperhero")
+    public String deleteSuperhero( HttpServletRequest request )
     {
-        Superhero foundSuperhero = service.getSuperheroById( superheroId );
-        if ( foundSuperhero == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
-        List<Integer> sightingLocationIds = service.getAllSightingLocationsBySuperheroId( foundSuperhero.getId() );
-        List<Location> locationList = new ArrayList<>();
-        for ( Integer locationId : sightingLocationIds )
-        {
-            locationList.add( service.getLocationById( locationId ) );
-        }
-        foundSuperhero.setSightingLocations( locationList );
-        foundSuperhero.setMemberOrganizations( service.getAllOrganizationsBySuperheroId( foundSuperhero.getId() ) );
+        int id = Integer.parseInt( request.getParameter( "id" ) );
+        serviceLayer.deleteSuperheroById( id );
 
-        return ResponseEntity.ok( foundSuperhero );
+        return "redirect:/superheros";
     }
 
-    @PutMapping( "/updateSuperhero/{superheroId}" )
-    public ResponseEntity<Superhero> updateSuperheroById( @PathVariable int superheroId
-        , @RequestBody Superhero updatedSuperhero )
+    @GetMapping( "editSuperhero" )
+    public String editSuperhero(HttpServletRequest request, Model model)
     {
-        Superhero foundSuperhero = service.getSuperheroById( superheroId );
-        if ( foundSuperhero == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
+        int id = Integer.parseInt( request.getParameter( "id" ) );
+        Superhero superhero = serviceLayer.getSuperheroById( id );
 
-        updatedSuperhero = service.updateSuperhero( superheroId, updatedSuperhero );
-        return ResponseEntity.ok( updatedSuperhero );
+        model.addAttribute( "superhero", superhero );
+
+        return "editSuperhero";
     }
 
-    @DeleteMapping( "/deleteSuperhero/{superheroId}" )
-    public ResponseEntity<String> deleteSuperheroById( @PathVariable int superheroId )
+    @PostMapping( "editSuperhero" )
+    public String performEditTeacher( HttpServletRequest request )
     {
-        Superhero foundSuperhero = service.getSuperheroById( superheroId );
-        if ( foundSuperhero == null )
-        {
-            return new ResponseEntity( "Superhero not found.", HttpStatus.NOT_FOUND );
-        }
+        int id = Integer.parseInt( request.getParameter( "id" ) );
+        Superhero superhero = serviceLayer.getSuperheroById( id );
 
-        boolean isSuccessful = service.deleteSuperheroById( superheroId );
-        if( isSuccessful )
-        {
-            return ResponseEntity.ok( foundSuperhero.getName() + " deleted successfully." );
-        }
-        else
-        {
-            return new ResponseEntity( "Error occured while deleting Superhero.", HttpStatus.CONFLICT );
-        }
+        superhero.setName( request.getParameter( "name" ) );
+        superhero.setDescription( request.getParameter( "description" ) );
+        superhero.setSuperpower( request.getParameter( "superpower" ) );
+
+        serviceLayer.updateSuperhero( id, superhero );
+
+        return "redirect:/superheros";
     }
-
-    @GetMapping( "/getAllSuperheros" )
-    public List<Superhero> getAllSuperheros()
-    {
-        return service.getAllSuperheros();
-    }
-
-    @GetMapping( "/getOrgsBySuperhero/{superheroId}" )
-    public List<Organization> getAllOrgsBySuperheroId( @PathVariable int superheroId )
-    {
-        //TODO: finish
-        return null;
-    }
-
-    //Organization methods
-    //-----------------------------------------------------------------------------------------------------
-
-    @PostMapping( "/addOrganization" )
-    public Organization addOrganization( @RequestBody Organization newOrganization )
-    {
-        //TODO: add validation
-        return service.addOrganization( newOrganization );
-    }
-    
-    @GetMapping( "/getOrganization/{organizationId}" )
-    public ResponseEntity<Organization> getOrganizationById( @PathVariable int organizationId )
-    {
-        Organization foundOrganization = service.getOrganizationById( organizationId );
-        if ( foundOrganization == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
-        List<Integer> heroIdSet = service.getAllMembersByOrganizationId( foundOrganization.getId() );
-        List<Superhero> membersSet = new ArrayList<>();
-        for ( Integer heroId : heroIdSet )
-        {
-            membersSet.add( service.getSuperheroById( heroId ) );
-        }
-        foundOrganization.setMembersOfOrganization( membersSet );
-        return ResponseEntity.ok( foundOrganization );
-    }
-
-    @PutMapping( "/updateOrganization/{organizationId}" )
-    public ResponseEntity<Organization> updateOrganizationById( @PathVariable int organizationId
-        , @RequestBody Organization updatedOrganization )
-    {
-        Organization foundOrganization = service.getOrganizationById( organizationId );
-        if ( foundOrganization == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
-        updatedOrganization = service.updateOrganization( organizationId, updatedOrganization );
-        return ResponseEntity.ok( updatedOrganization );
-    }
-
-    @DeleteMapping( "/deleteOrganization/{organizationId}" )
-    public ResponseEntity<String> deleteOrganizationById( @PathVariable int organizationId )
-    {
-        Organization foundOrganization = service.getOrganizationById( organizationId );
-        if ( foundOrganization == null )
-        {
-            return new ResponseEntity( "Organization not found.", HttpStatus.NOT_FOUND );
-        }
-
-        boolean isSuccessful = service.deleteOrganizationById( organizationId );
-        if( isSuccessful )
-        {
-            return ResponseEntity.ok( foundOrganization.getName() + " deleted successfully." );
-        }
-        else
-        {
-            return new ResponseEntity( "Error occured while deleting Organization.", HttpStatus.CONFLICT );
-        }
-    }
-
-    @GetMapping( "/getAllOrganizations" )
-    public List<Organization> getAllOrganizations()
-    {
-        return service.getAllOrganizations();
-    }
-
-    @PostMapping( "/addSuperheroToOrg/{superheroId}/{organizationId}" )
-    public ResponseEntity<String> addSuperheroToOrganization( @PathVariable int superheroId, @PathVariable int organizationId )
-    {
-        Superhero foundSuperhero = service.getSuperheroById( superheroId );
-        if ( foundSuperhero == null )
-        {
-            //TODO: fix error not triggering properly
-            return new ResponseEntity<String>( "Superhero not found in DB.", HttpStatus.NOT_FOUND );
-        }
-
-        Organization foundOrg = service.getOrganizationById( organizationId );
-        if( foundOrg == null )
-        {
-            return new ResponseEntity<String>( "Organization not found in DB.", HttpStatus.NOT_FOUND );
-        }
-
-        boolean isSuccessful = service.addSuperheroToOrganization( superheroId, organizationId );
-        if ( isSuccessful )
-        {
-            return new ResponseEntity<String>( foundSuperhero.getName() + " was added to the " +
-                foundOrg.getName() + " Organization.", HttpStatus.OK );
-        }
-        return new ResponseEntity<String>( "Error occured adding to Bridge table despite both " +
-            "objects being found.", HttpStatus.CONFLICT );
-    }
-
-    @DeleteMapping( "/removeSuperheroFromOrg/{superheroId}/{organizationId}" )
-    public ResponseEntity<String> removeSuperheroFromOrganization( @PathVariable int superheroId, @PathVariable int organizationId )
-    {
-        Superhero foundSuperhero = service.getSuperheroById( superheroId );
-        if ( foundSuperhero == null )
-        {
-            //TODO: fix error not triggering properly
-            return new ResponseEntity<String>( "Superhero not found in DB.", HttpStatus.NOT_FOUND );
-        }
-
-        Organization foundOrg = service.getOrganizationById( organizationId );
-        if( foundOrg == null )
-        {
-            return new ResponseEntity<String>( "Organization not found in DB.", HttpStatus.NOT_FOUND );
-        }
-
-        boolean isSuccessful = service.removeSuperheroFromOrganization( superheroId, organizationId );
-        if ( isSuccessful )
-        {
-            return new ResponseEntity<String>( foundSuperhero.getName() + " was removed from the " +
-                foundOrg.getName() + " Organization.", HttpStatus.OK );
-        }
-        return new ResponseEntity<String>( "Error occured removing from Bridge table despite both " +
-            "objects being found.", HttpStatus.CONFLICT );
-    }
-
-    //TODO: possibly switch implementations for  second half of Project.
-    /*
-    @GetMapping( "/getAllOrgMembers/{organizationId}" )
-    public List<Superhero> getAllOrgMembers( @PathVariable int organizationId )
-    {
-        List<Integer> returnedHeroIds = service.getAllMembersByOrganizationId( organizationId );
-        List<Superhero> returnedSuperheroSet = new ArrayList<Superhero>();
-        for ( Integer superheroId : returnedHeroIds )
-        {
-            returnedSuperheroSet.add( service.getSuperheroById( superheroId ) );
-        }
-        return returnedSuperheroSet;
-    }
-    */
-
-    @GetMapping( "/getAllOrgMembers/{organizationId}" )
-    public Map<String, List<Superhero>> getAllOrgMembers( @PathVariable int organizationId )
-    {
-        List<Integer> returnedHeroIds = service.getAllMembersByOrganizationId( organizationId );
-        List<Superhero> returnedSuperheroSet = new ArrayList<Superhero>();
-        for ( Integer superheroId : returnedHeroIds )
-        {
-            returnedSuperheroSet.add( service.getSuperheroById( superheroId ) );
-        }
-        Map<String, List<Superhero>> responseMap = new HashMap<>();
-        responseMap.put( "Superheros from Organization: " + service.getOrganizationById( organizationId ).getName(), returnedSuperheroSet );
-        return responseMap;
-    }
-
-    //Locatiop Methods
-    //--------------------------------------------------------------------------------------------------------------------
-
-    @PostMapping( "/addLocation" )
-    public Location addLocation( @RequestBody Location newLocation )
-    {
-        return service.addLocation( newLocation );
-    }
-
-    @GetMapping( "/getLocation/{locationId}" )
-    public ResponseEntity<Location> getLocationById( @PathVariable int locationId )
-    {
-        Location foundLocation = service.getLocationById( locationId );
-        if ( foundLocation == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
-        return ResponseEntity.ok( foundLocation );
-    }
-
-    @PutMapping( "/updateLocation/{locationId}" )
-    public ResponseEntity<Location> updateLocationById( @PathVariable int locationId
-        , @RequestBody Location updatedLocation )
-    {
-        Location foundLocation = service.getLocationById( locationId );
-        if ( foundLocation == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
-        updatedLocation = service.updateLocation( locationId, updatedLocation );
-        return ResponseEntity.ok( updatedLocation );
-    }
-
-    @DeleteMapping( "/deleteLocation/{locationId}" )
-    public ResponseEntity<String> deleteLocationById( @PathVariable int locationId )
-    {
-        Location foundLocation = service.getLocationById( locationId );
-        if ( foundLocation == null )
-        {
-            return new ResponseEntity( "Location not found.", HttpStatus.NOT_FOUND );
-        }
-
-        boolean isSuccessful = service.deleteLocationById( locationId );
-        if( isSuccessful )
-        {
-            return ResponseEntity.ok( foundLocation.getName() + " deleted successfully." );
-        }
-        else
-        {
-            return new ResponseEntity( "Error occured while deleting Location.", HttpStatus.CONFLICT );
-        }
-    }
-
-    @GetMapping( "/getAllLocations" )
-    public List<Location> getAllLocations()
-    {
-        return service.getAllLocations();
-    }
-
-    //Sighting Functions
-    //-----------------------------------------------------------------------------------------------------------------
-
-    @PostMapping( "/addSighting" )
-    public Sighting addSighting( @RequestBody Sighting newSighting )
-    {
-        Sighting returnedSighting = service.addSighting( newSighting );
-        returnedSighting.setSuperheroName( service.getSuperheroById( returnedSighting.getHeroId() ).getName() );
-        returnedSighting.setLocationName( service.getLocationById( returnedSighting.getLocationId() ).getName() );
-        return returnedSighting;
-    }
-
-    @GetMapping( "/getSighting/{sightingId}" )
-    public ResponseEntity<Sighting> getSightingById( @PathVariable int sightingId )
-    {
-        Sighting foundSighting = service.getSightingById( sightingId );
-        if ( foundSighting == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
-        return ResponseEntity.ok( foundSighting );
-    }
-
-    @PutMapping( "/updateSighting/{sightingId}" )
-    public ResponseEntity<Sighting> updateSightingById( @PathVariable int sightingId
-        , @RequestBody Sighting updatedSighting )
-    {
-        Sighting foundSighting = service.getSightingById( sightingId );
-        if ( foundSighting == null )
-        {
-            return new ResponseEntity( null, HttpStatus.NOT_FOUND );
-        }
-        updatedSighting = service.updateSighting( sightingId, updatedSighting );
-        return ResponseEntity.ok( updatedSighting );
-    }
-
-    @DeleteMapping( "/deleteSighting/{sightingId}" )
-    public ResponseEntity<String> deleteSightingById( @PathVariable int sightingId )
-    {
-        Sighting foundSighting = service.getSightingById( sightingId );
-        if ( foundSighting == null )
-        {
-            return new ResponseEntity( "Sighting not found.", HttpStatus.NOT_FOUND );
-        }
-
-        boolean isSuccessful = service.deleteSightingById( sightingId );
-        if( isSuccessful )
-        {
-            return ResponseEntity.ok( "Sighting " + foundSighting.getId() + " deleted successfully." );
-        }
-        else
-        {
-            return new ResponseEntity( "Error occured while deleting Sighting.", HttpStatus.CONFLICT );
-        }
-    }
-
-    @GetMapping( "/getAllSightings" )
-    public List<Sighting> getAllSightings()
-    {
-        return service.getAllSightings();
-    }
-
-    @GetMapping( "/getSightingsByDate/{sightingDate}" )
-    public List<Sighting> getSightingsByDate( @PathVariable LocalDate sightingDate )
-    {
-        List<Sighting> returnedSightingSet = service.getAllSightingsByDate( sightingDate );
-        for ( Sighting sighting : returnedSightingSet )
-        {
-            sighting.setSuperheroName( service.getSuperheroById( sighting.getHeroId() ).getName() );
-            sighting.setLocationName( service.getLocationById( sighting.getLocationId() ).getName() );
-        }
-        return returnedSightingSet;
-    }
-
-    @GetMapping( "/getSightingLocationsByHero/{superheroId}" )
-    public List<Location> getSightingLocationsByHero( @PathVariable int superheroId )
-    {
-        List<Integer> returnedLocationIds = service.getAllSightingLocationsBySuperheroId( superheroId );
-        List<Location> returnedLocationSet = new ArrayList<Location>();
-        for ( Integer locationId : returnedLocationIds )
-        {
-            returnedLocationSet.add( service.getLocationById( locationId ) );
-        }
-        return returnedLocationSet;
-    }
-
-    @GetMapping( "/getAllSightingsByLocation/{locationId}" )
-    public List<Sighting> getAllSightingsByLocation( @PathVariable int locationId )
-    {
-        List<Sighting> returnedSightingSet = service.getAllSuperheroSightingsByLocationId( locationId );
-        for ( Sighting sighting : returnedSightingSet )
-        {
-            sighting.setSuperheroName( service.getSuperheroById( sighting.getHeroId() ).getName() );
-            sighting.setLocationName( service.getLocationById( sighting.getLocationId() ).getName() );
-        }
-        return returnedSightingSet;
-    }
-    
-}//END of SuperheroController
+}//End of SuperheroController
