@@ -12,19 +12,24 @@
 
 package com.sg.superhero.dao;
 
-import com.sg.superhero.dto.Location;
 import com.sg.superhero.dto.Sighting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-@Component
+@Repository
 @Profile( "database" )
 public class SightingDaoDBImpl implements SightingDao
 {
@@ -52,7 +57,7 @@ public class SightingDaoDBImpl implements SightingDao
 
             prepStatement.setInt( 1, newSighting.getHeroId() );
             prepStatement.setInt( 2, newSighting.getLocationId() );
-            prepStatement.setDate( 3, newSighting.getDate() );
+            prepStatement.setDate( 3, Date.valueOf( newSighting.getDate() ) );
             return prepStatement;
         }, keyHolder );
 
@@ -103,6 +108,26 @@ public class SightingDaoDBImpl implements SightingDao
         return jdbcTemplate.query( sql, new SightingDaoDBImpl.SightingMapper() );
     }
 
+    @Override
+    public List<Sighting> getAllSightingsByDate( LocalDate date )
+    {
+        final String sql = "SELECT id, heroId, locationId, date FROM sighting WHERE date = ?;";
+        return jdbcTemplate.query( sql, new SightingDaoDBImpl.SightingMapper(), Date.valueOf( date ) );
+    }
+
+    @Override
+    public List<Integer> getAllSightingLocationsBySuperheroId( int superheroId )
+    {
+        final String sql = "SELECT locationId FROM sighting WHERE heroId = ?;";
+        return jdbcTemplate.queryForList( sql, Integer.class, superheroId );
+    }
+
+    @Override
+    public List<Sighting> getAllSuperheroSightingsByLocationId( int locationId )
+    {
+        return null;
+    }
+
     private static final class SightingMapper implements RowMapper<Sighting>
     {
         @Override
@@ -112,7 +137,7 @@ public class SightingDaoDBImpl implements SightingDao
             sightingObj.setId( resultSet.getInt( "id" ) );
             sightingObj.setHeroId( resultSet.getInt( "heroId" ) );
             sightingObj.setLocationId( resultSet.getInt( "locationId" ) );
-            sightingObj.setDate( resultSet.getDate( "date" ) );
+            sightingObj.setDate( resultSet.getDate( "date" ).toLocalDate() );
             return sightingObj;
         }
     }//End of SightingMapper

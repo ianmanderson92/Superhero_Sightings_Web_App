@@ -18,12 +18,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
 
-@Component
+@Repository
 @Profile( "database" )
 public class OrganizationDaoDBImpl implements OrganizationDao
 {

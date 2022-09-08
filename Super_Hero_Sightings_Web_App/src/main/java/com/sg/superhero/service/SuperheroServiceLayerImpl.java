@@ -20,7 +20,7 @@ import com.sg.superhero.dto.Superhero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -49,13 +49,11 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Superhero addSuperhero( Superhero newSuperhero )
     {
-        //TODO: add validation
-
+        //Validates new object
         Superhero superheroToAdd = new Superhero( newSuperhero.getName(), newSuperhero.getDescription(),
             newSuperhero.getSuperpower() );
-
-        superheroDao.addSuperhero( superheroToAdd );
-        return superheroToAdd;
+        
+        return superheroDao.addSuperhero( superheroToAdd );
     }
 
     @Override
@@ -68,8 +66,10 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Superhero updateSuperhero( int id, Superhero updatedSuperhero )
     {
-        //TODO: validate updatedSuperhero
-        return superheroDao.updateSuperhero( id, updatedSuperhero );
+        Superhero superheroToUpdate = new Superhero( updatedSuperhero.getName(), updatedSuperhero.getDescription(),
+            updatedSuperhero.getSuperpower() );
+        
+        return superheroDao.updateSuperhero( id, superheroToUpdate );
     }
 
     @Override
@@ -97,8 +97,11 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Organization addOrganization( Organization newOrganization )
     {
-        //TODO: add validation
-        return organizationDao.addOrganization( newOrganization );
+        //Validates new object
+        Organization orgToAdd = new Organization( newOrganization.getName(), newOrganization.getDescription(),
+            newOrganization.getAddress(), newOrganization.getEmail(), newOrganization.getPhone() );
+
+        return organizationDao.addOrganization( orgToAdd );
     }
 
     @Override
@@ -110,8 +113,11 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Organization updateOrganization( int id, Organization updatedOrganization )
     {
-        //TODO: validate updatedOrganization
-        return organizationDao.updateOrganization( id, updatedOrganization );
+        //Validates new object
+        Organization orgToUpdate = new Organization( updatedOrganization.getName(), updatedOrganization.getDescription(),
+            updatedOrganization.getAddress(), updatedOrganization.getEmail(), updatedOrganization.getPhone() );
+        
+        return organizationDao.updateOrganization( id, orgToUpdate );
     }
 
     @Override
@@ -151,7 +157,11 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Location addLocation( Location newLocation )
     {
-        return locationDao.addLocation( newLocation );
+        //Validates new object
+        Location locationToAdd = new Location( newLocation.getName(), newLocation.getDescription(),
+            newLocation.getAddress(), newLocation.getLatitude(), newLocation.getLongitude() );
+        
+        return locationDao.addLocation( locationToAdd );
     }
 
     @Override
@@ -163,7 +173,11 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Location updateLocation( int id, Location updatedLocation )
     {
-        return locationDao.updateLocation( id, updatedLocation );
+        //Validates new object
+        Location locationToAdd = new Location( updatedLocation.getName(), updatedLocation.getDescription(),
+            updatedLocation.getAddress(), updatedLocation.getLatitude(), updatedLocation.getLongitude() );
+        
+        return locationDao.updateLocation( id, locationToAdd );
     }
 
     @Override
@@ -185,7 +199,11 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Sighting addSighting( Sighting newSighting )
     {
-        return sightingDao.addSighting( newSighting );
+        //Validates new object
+        Sighting sightingToAdd = new Sighting( newSighting.getHeroId(), newSighting.getLocationId(),
+            newSighting.getDate() );
+
+        return sightingDao.addSighting( sightingToAdd );
     }
 
     @Override
@@ -197,7 +215,11 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public Sighting updateSighting( int id, Sighting updatedSighting )
     {
-        return sightingDao.updateSighting( id, updatedSighting );
+        //Validates new object
+        Sighting sightingToUpdate = new Sighting( updatedSighting.getHeroId(), updatedSighting.getLocationId(),
+            updatedSighting.getDate() );
+        
+        return sightingDao.updateSighting( id, sightingToUpdate );
     }
 
     @Override
@@ -213,22 +235,21 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     }
 
     @Override
-    public List<Sighting> getAllSightingsByDate( Date date )
+    public List<Sighting> getAllSightingsByDate( LocalDate date )
     {
-        return null;
+        return sightingDao.getAllSightingsByDate( date );
     }
 
     @Override
-    public List<Location> getAllSightingLocationsBySuperheroId( int superheroId )
+    public List<Integer> getAllSightingLocationsBySuperheroId( int superheroId )
     {
-        return null;
+        return sightingDao.getAllSightingLocationsBySuperheroId( superheroId );
     }
 
     @Override
-    public List<Superhero> getAllSuperheroSightingsByLocationId( int locationId )
+    public List<Sighting> getAllSuperheroSightingsByLocationId( int locationId )
     {
-        return null;
+        return sightingDao.getAllSuperheroSightingsByLocationId( locationId );
     }
-
 
 }//End if SuperheroServiceLayerImpl

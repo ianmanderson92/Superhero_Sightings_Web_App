@@ -18,7 +18,7 @@ import com.sg.superhero.dto.Organization;
 import com.sg.superhero.dto.Sighting;
 import com.sg.superhero.dto.Superhero;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface SuperheroServiceLayer
@@ -54,9 +54,9 @@ public interface SuperheroServiceLayer
     public Sighting updateSighting( int id, Sighting updatedSighting );
     public boolean deleteSightingById( int id );
     public List<Sighting> getAllSightings();
-    public List<Sighting> getAllSightingsByDate( Date date );
-    public List<Location> getAllSightingLocationsBySuperheroId( int superheroId );
-    public List<Superhero> getAllSuperheroSightingsByLocationId( int locationId );
+    public List<Sighting> getAllSightingsByDate( LocalDate date );
+    public List<Integer> getAllSightingLocationsBySuperheroId( int superheroId );
+    public List<Sighting> getAllSuperheroSightingsByLocationId( int locationId );
 
 
 }//End of SuperHeroServiceLayer

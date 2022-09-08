@@ -13,17 +13,16 @@
 package com.sg.superhero.dao;
 
 import com.sg.superhero.dto.Location;
-import com.sg.superhero.dto.Organization;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
 
-@Component
+@Repository
 @Profile( "database" )
 public class LocationDaoDBImpl implements LocationDao
 {

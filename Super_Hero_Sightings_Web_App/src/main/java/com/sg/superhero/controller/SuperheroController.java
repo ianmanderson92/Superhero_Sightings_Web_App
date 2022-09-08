@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,8 +47,6 @@ public class SuperheroController
     public Superhero addSuperhero( @RequestBody Superhero newSuperhero )
     {
         Superhero addedSuperHero = service.addSuperhero( newSuperhero );
-        //System.out.println(addedSuperHero.getName() + " was added with id: " + addedSuperHero.getId()
-        //+ " successfully" );
         return addedSuperHero;
     }
 
@@ -59,6 +58,15 @@ public class SuperheroController
         {
             return new ResponseEntity( null, HttpStatus.NOT_FOUND );
         }
+        List<Integer> sightingLocationIds = service.getAllSightingLocationsBySuperheroId( foundSuperhero.getId() );
+        List<Location> locationList = new ArrayList<>();
+        for ( Integer locationId : sightingLocationIds )
+        {
+            locationList.add( service.getLocationById( locationId ) );
+        }
+        foundSuperhero.setSightingLocations( locationList );
+        foundSuperhero.setMemberOrganizations( service.getAllOrganizationsBySuperheroId( foundSuperhero.getId() ) );
+
         return ResponseEntity.ok( foundSuperhero );
     }
 
@@ -127,6 +135,13 @@ public class SuperheroController
         {
             return new ResponseEntity( null, HttpStatus.NOT_FOUND );
         }
+        List<Integer> heroIdSet = service.getAllMembersByOrganizationId( foundOrganization.getId() );
+        List<Superhero> membersSet = new ArrayList<>();
+        for ( Integer heroId : heroIdSet )
+        {
+            membersSet.add( service.getSuperheroById( heroId ) );
+        }
+        foundOrganization.setMembersOfOrganization( membersSet );
         return ResponseEntity.ok( foundOrganization );
     }
 
@@ -315,7 +330,10 @@ public class SuperheroController
     @PostMapping( "/addSighting" )
     public Sighting addSighting( @RequestBody Sighting newSighting )
     {
-        return service.addSighting( newSighting );
+        Sighting returnedSighting = service.addSighting( newSighting );
+        returnedSighting.setSuperheroName( service.getSuperheroById( returnedSighting.getHeroId() ).getName() );
+        returnedSighting.setLocationName( service.getLocationById( returnedSighting.getLocationId() ).getName() );
+        return returnedSighting;
     }
 
     @GetMapping( "/getSighting/{sightingId}" )
@@ -366,6 +384,42 @@ public class SuperheroController
     public List<Sighting> getAllSightings()
     {
         return service.getAllSightings();
+    }
+
+    @GetMapping( "/getSightingsByDate/{sightingDate}" )
+    public List<Sighting> getSightingsByDate( @PathVariable LocalDate sightingDate )
+    {
+        List<Sighting> returnedSightingSet = service.getAllSightingsByDate( sightingDate );
+        for ( Sighting sighting : returnedSightingSet )
+        {
+            sighting.setSuperheroName( service.getSuperheroById( sighting.getHeroId() ).getName() );
+            sighting.setLocationName( service.getLocationById( sighting.getLocationId() ).getName() );
+        }
+        return returnedSightingSet;
+    }
+
+    @GetMapping( "/getSightingLocationsByHero/{superheroId}" )
+    public List<Location> getSightingLocationsByHero( @PathVariable int superheroId )
+    {
+        List<Integer> returnedLocationIds = service.getAllSightingLocationsBySuperheroId( superheroId );
+        List<Location> returnedLocationSet = new ArrayList<Location>();
+        for ( Integer locationId : returnedLocationIds )
+        {
+            returnedLocationSet.add( service.getLocationById( locationId ) );
+        }
+        return returnedLocationSet;
+    }
+
+    @GetMapping( "/getAllSightingsByLocation/{locationId}" )
+    public List<Sighting> getAllSightingsByLocation( @PathVariable int locationId )
+    {
+        List<Sighting> returnedSightingSet = service.getAllSuperheroSightingsByLocationId( locationId );
+        for ( Sighting sighting : returnedSightingSet )
+        {
+            sighting.setSuperheroName( service.getSuperheroById( sighting.getHeroId() ).getName() );
+            sighting.setLocationName( service.getLocationById( sighting.getLocationId() ).getName() );
+        }
+        return returnedSightingSet;
     }
     
 }//END of SuperheroController

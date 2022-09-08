@@ -12,10 +12,12 @@
 
 package com.sg.superhero.dto;
 
+import com.sg.superhero.dao.InputValidationException;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,6 +44,14 @@ public class Superhero
         this.name = name;
         this.description = description;
         this.superpower = superpower;
+
+        try
+        {
+            validateSuperheroMembers();
+        } catch ( Exception e )
+        {
+            throw new RuntimeException( e );
+        }
     }
 
     public int getId()
@@ -124,6 +134,79 @@ public class Superhero
     public int hashCode()
     {
         return Objects.hash( id, name, description, superpower );
+    }
+
+    //Validation function
+    private void validateSuperheroMembers() throws Exception
+    {
+        List<String> errorMessages = new ArrayList<>();
+
+        //Name
+        if ( !hasContent( this.name ) )
+        {
+            errorMessages.add( "Name is required." );
+        }
+        if ( this.name.length() > 30 )
+        {
+            errorMessages.add( "Input Name is too long." );
+        }
+
+        //Description
+        if ( this.description.length() > 450 )
+        {
+            errorMessages.add( "Input Description is too long." );
+        }
+
+        if ( this.superpower.length() > 450 )
+        {
+            errorMessages.add( "Input Superpower is too long." );
+        }
+
+        if ( !errorMessages.isEmpty() )
+        {
+            Exception validationEX = new Exception();
+            for ( String error : errorMessages )
+            {
+                validationEX.addSuppressed( new InputValidationException( error ) );
+            }
+            throw validationEX;
+        }
+    }
+
+    //Helper methods for validation function
+
+    /**
+     Method code adapted from:
+     Author: Hirondelle Systems
+     http://www.javapractices.com/topic/TopicAction.do?Id=209#:~:text=In%20the%20Java%20programming%20language,the%20user%20about%20the%20issues
+
+     * @param field object to be checked
+     * @param errorMsg error message to throw
+     * @param errors error message array to append
+     * @return true is null
+     */
+    private boolean ensureNotNull( Object field, String errorMsg, List<String> errors )
+    {
+        boolean result = true;
+        if (field == null)
+        {
+            errors.add( errorMsg );
+            result = false;
+        }
+        return result;
+    }
+
+    /**
+     Method code adapted from:
+     Author: Hirondelle Systems
+     http://www.javapractices.com/topic/TopicAction.do?Id=209#:~:text=In%20the%20Java%20programming%20language,the%20user%20about%20the%20issues
+
+     * @param stringToCheck String to validate
+     * @return true if not null or empty
+     */
+    private boolean hasContent( String stringToCheck )
+    {
+        return ( stringToCheck != null && stringToCheck.trim().length() > 0 );
     }
 
 }//End of Superhero
