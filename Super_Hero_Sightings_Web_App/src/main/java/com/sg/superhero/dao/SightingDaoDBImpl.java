@@ -125,7 +125,8 @@ public class SightingDaoDBImpl implements SightingDao
     @Override
     public List<Sighting> getAllSuperheroSightingsByLocationId( int locationId )
     {
-        return null;
+        final String sql = "SELECT id, heroId, locationId, date FROM sighting WHERE locationId = ?;";
+        return jdbcTemplate.query( sql, new SightingDaoDBImpl.SightingMapper(), locationId );
     }
 
     private static final class SightingMapper implements RowMapper<Sighting>
