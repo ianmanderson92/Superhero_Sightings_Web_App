@@ -1,13 +1,13 @@
 <!--
   ~ @Author: Ian Anderson
   ~ @Mailto: ianmanderson92@gmail.com
-  ~ @Modified: 9/8/22, 4:40 AM
+  ~ @Modified: 9/8/22, 6:39 AM
   ~ All Rights Reserved.
   ~
   ~ @Project: Super_Hero_Sightings_Web_App
-  ~ @Class_Name: superheros.html
-  ~ @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero_Web_App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/src/main/resources/templates/superheros.html
-  ~ @File_Name: superheros.html
+  ~ @Class_Name: organizations.html
+  ~ @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero_Web_App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/src/main/resources/templates/organizations.html
+  ~ @File_Name: organizations.html
   -->
 
 <!doctype html>
@@ -20,14 +20,14 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Super Hero Manager</title>
+    <title>Organization Manager</title>
 </head>
 <body>
 <!-- Main Body of Page -->
 <div class="container">
     <div class="row m-4">
         <div class="col text-center border border-dark">
-            <h1>Add Hero/Villain</h1>
+            <h1>Organizations</h1>
         </div>
     </div>
 
@@ -51,10 +51,10 @@
 
     <div class="row m-4 border border-dark">
         <div class="col-3 text-center m-3">
-            <span class="h3">Super Heroes</span>
+            <span class="h3">Add Organization</span>
         </div>
         <div class="col-7 text-center m-3">
-            <form action="addSuperhero" method="POST">
+            <form action="addOrganization" method="POST">
                 <div class="form-group row">
                     <label for="name" class="col-3 col-form-label">Name</label>
                     <div class="col-9">
@@ -68,12 +68,24 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="superpower" class="col-3 col-form-label">Super Power(s)</label>
+                    <label for="address" class="col-3 col-form-label">Address</label>
                     <div class="col-9">
-                        <input type="text" name="superpower" id="superpower" class="form-control"/>
+                        <input type="text" name="address" id="address" class="form-control"/>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Hero</button>
+                <div class="form-group row">
+                    <label for="email" class="col-3 col-form-label">Email</label>
+                    <div class="col-9">
+                        <input type="text" name="email" id="email" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="col-3 col-form-label">Phone Number</label>
+                    <div class="col-9">
+                        <input type="text" name="phone" id="phone" class="form-control"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>
     </div>
@@ -86,23 +98,27 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Super Power</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr th:each="superhero : ${superheros}">
-                    <td th:text="${superhero.id}">Hero ID</td>
-                    <td th:text="${superhero.name}">Name</td>
-                    <td th:text="${superhero.description}">Description</td>
-                    <td th:text="${superhero.superpower}">Super Power(s)</td>
+                <tr th:each="organization : ${organizations}">
+                    <td th:text="${organization.id}">Org ID</td>
+                    <td th:text="${organization.name}">Name</td>
+                    <td th:text="${organization.description}">Description</td>
+                    <td th:text="${organization.address}">Address</td>
+                    <td th:text="${organization.email}">Email</td>
+                    <td th:text="${organization.phone}">Phone Number</td>
                     <td>
-                        <a href="#" th:href="@{/editSuperhero(id=${superhero.id})}">Edit</a>
+                        <a href="#" th:href="@{/editOrganization(id=${organization.id})}">Edit</a>
                     </td>
                     <td>
-                        <a href="#" th:href="@{/deleteSuperhero(id=${superhero.id})}">Delete</a>
+                        <a href="#" th:href="@{/deleteOrganization(id=${organization.id})}">Delete</a>
                     </td>
                 </tr>
                 </tbody>

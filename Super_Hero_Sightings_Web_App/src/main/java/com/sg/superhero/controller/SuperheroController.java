@@ -32,7 +32,7 @@ import java.util.List;
 public class SuperheroController
 {
 
-    @Autowired
+    /*@Autowired
     SuperheroDao superheroDao;
 
     @Autowired
@@ -42,7 +42,7 @@ public class SuperheroController
     LocationDao locationDao;
 
     @Autowired
-    SightingDao sightingDao;
+    SightingDao sightingDao;*/
 
     @Autowired
     SuperheroServiceLayer serviceLayer;

@@ -32,6 +32,8 @@ public class Superhero
     private List<Location> sightingLocations;
     private List<Organization> memberOrganizations;
 
+    //TODO: Add Bridge Table for SuperPowers and SuperPowers Page.
+
     public Superhero()
     {
     }
