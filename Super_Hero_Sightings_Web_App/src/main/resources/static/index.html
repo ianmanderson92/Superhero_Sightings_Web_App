@@ -33,6 +33,10 @@
 
     <div class="row m-4 border border-dark">
         <div class="col text-center m-3">
+            <a href="/" class="btn btn-outline-primary btn-lg">Home</a>
+        </div>
+
+        <div class="col text-center m-3">
             <a href="superheros" class="btn btn-outline-primary btn-lg">Super Heroes</a>
         </div>
 
@@ -48,6 +52,41 @@
             <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
         </div>
     </div>
+
+    <div class="row m4">
+        <div class="col text-center border border-dark">
+            <h3>Most Recent Hero Sightings</h3>
+        </div>
+    </div>
+
+    <div class="row m-4 border border-dark">
+        <div class="col text-center m-3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Sighting ID</th>
+                    <th>Hero ID</th>
+                    <th>Hero Name</th>
+                    <th>Location ID</th>
+                    <th>Location Name</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="sighting : ${sightings}">
+                    <td th:text="${sighting.id}">ID</td>
+                    <td th:text="${sighting.heroId}">Hero ID</td>
+                    <td th:text="${sighting.superheroName}">Hero Name</td>
+                    <td th:text="${sighting.locationId}">Location ID</td>
+                    <td th:text="${sighting.locationName}">Location Name</td>
+                    <td th:text="${sighting.date}">Date</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div>
 <!-- End main body -->
 

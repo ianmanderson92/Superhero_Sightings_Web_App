@@ -12,16 +12,11 @@
 
 package com.sg.superhero.controller;
 
-import com.sg.superhero.dao.LocationDao;
-import com.sg.superhero.dao.OrganizationDao;
-import com.sg.superhero.dao.SightingDao;
-import com.sg.superhero.dao.SuperheroDao;
 import com.sg.superhero.dto.Superhero;
 import com.sg.superhero.service.SuperheroServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -32,25 +27,13 @@ import java.util.List;
 public class SuperheroController
 {
 
-    /*@Autowired
-    SuperheroDao superheroDao;
-
-    @Autowired
-    OrganizationDao organizationDao;
-
-    @Autowired
-    LocationDao locationDao;
-
-    @Autowired
-    SightingDao sightingDao;*/
-
     @Autowired
     SuperheroServiceLayer serviceLayer;
 
     @Autowired
     RESTController restController;
 
-    @GetMapping("superheros")
+    @GetMapping( "superheros" )
     public String displaySuperheros( Model model )
     {
         List<Superhero> superheroList = serviceLayer.getAllSuperheros();
@@ -59,7 +42,7 @@ public class SuperheroController
     }
 
     @PostMapping( "addSuperhero" )
-    public String addSuperhero ( HttpServletRequest request )
+    public String addSuperhero( HttpServletRequest request )
     {
         String name = request.getParameter( "name" );
         String description = request.getParameter( "description" );
@@ -71,7 +54,7 @@ public class SuperheroController
         return "redirect:/superheros";
     }
 
-    @GetMapping("deleteSuperhero")
+    @GetMapping( "deleteSuperhero" )
     public String deleteSuperhero( HttpServletRequest request )
     {
         int id = Integer.parseInt( request.getParameter( "id" ) );
@@ -81,7 +64,7 @@ public class SuperheroController
     }
 
     @GetMapping( "editSuperhero" )
-    public String editSuperhero(HttpServletRequest request, Model model)
+    public String editSuperhero( HttpServletRequest request, Model model )
     {
         int id = Integer.parseInt( request.getParameter( "id" ) );
         Superhero superhero = serviceLayer.getSuperheroById( id );
@@ -92,7 +75,7 @@ public class SuperheroController
     }
 
     @PostMapping( "editSuperhero" )
-    public String performEditTeacher( HttpServletRequest request )
+    public String performEditSuperhero( HttpServletRequest request )
     {
         int id = Integer.parseInt( request.getParameter( "id" ) );
         Superhero superhero = serviceLayer.getSuperheroById( id );

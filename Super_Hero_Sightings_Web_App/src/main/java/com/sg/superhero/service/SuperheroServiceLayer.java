@@ -57,6 +57,7 @@ public interface SuperheroServiceLayer
     public List<Sighting> getAllSightingsByDate( LocalDate date );
     public List<Integer> getAllSightingLocationsBySuperheroId( int superheroId );
     public List<Sighting> getAllSuperheroSightingsByLocationId( int locationId );
+    public List<Sighting> getTenMostRecentSightings();
 
 
 }//End of SuperHeroServiceLayer

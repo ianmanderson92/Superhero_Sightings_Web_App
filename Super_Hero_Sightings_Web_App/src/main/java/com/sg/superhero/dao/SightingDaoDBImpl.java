@@ -129,6 +129,13 @@ public class SightingDaoDBImpl implements SightingDao
         return jdbcTemplate.query( sql, new SightingDaoDBImpl.SightingMapper(), locationId );
     }
 
+    @Override
+    public List<Sighting> getTenMostRecentSightings()
+    {
+        final String sql = "SELECT id, heroId, locationId, date FROM sighting ORDER BY date DESC LIMIT 10;";
+        return jdbcTemplate.query( sql, new SightingDaoDBImpl.SightingMapper() );
+    }
+
     private static final class SightingMapper implements RowMapper<Sighting>
     {
         @Override

@@ -231,7 +231,13 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
     @Override
     public List<Sighting> getAllSightings()
     {
-        return sightingDao.getAllSightings();
+        List<Sighting> returnedSightings = sightingDao.getAllSightings();
+        for ( Sighting sighting : returnedSightings )
+        {
+            sighting.setLocationName( locationDao.getLocationById( sighting.getLocationId() ).getName() );
+            sighting.setSuperheroName( superheroDao.getSuperheroById( sighting.getHeroId() ).getName() );
+        }
+        return returnedSightings;
     }
 
     @Override
@@ -252,4 +258,15 @@ public class SuperheroServiceLayerImpl implements SuperheroServiceLayer
         return sightingDao.getAllSuperheroSightingsByLocationId( locationId );
     }
 
+    @Override
+    public List<Sighting> getTenMostRecentSightings()
+    {
+        List<Sighting> returnedSightings = sightingDao.getTenMostRecentSightings();
+        for ( Sighting sighting : returnedSightings )
+        {
+            sighting.setLocationName( locationDao.getLocationById( sighting.getLocationId() ).getName() );
+            sighting.setSuperheroName( superheroDao.getSuperheroById( sighting.getHeroId() ).getName() );
+        }
+        return returnedSightings;
+    }
 }//End if SuperheroServiceLayerImpl

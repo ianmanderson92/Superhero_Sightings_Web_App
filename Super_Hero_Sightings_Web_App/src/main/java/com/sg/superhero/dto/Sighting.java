@@ -155,7 +155,7 @@ public class Sighting
         ensureNotNull( this.locationId, "LocationId is required.", errorMessages );
 
         //Date
-        if( ensureNotNull( this.date, "Date is required", errorMessages ) )
+        if( !ensureNotNull( this.date, "Date is required", errorMessages ) )
         {
             LocalDate START_OF_DATE_RANGE = LocalDate.of( 1900, 1, 1 );
             LocalDate END_OF_DATE_RANGE = LocalDate.now();

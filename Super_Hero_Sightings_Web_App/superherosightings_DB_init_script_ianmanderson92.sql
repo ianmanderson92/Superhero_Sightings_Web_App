@@ -32,7 +32,7 @@ CREATE TABLE `location` (
   `latitude` decimal(10,8) NOT NULL,
   `longitude` decimal(11,8) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,17 +50,17 @@ CREATE TABLE `organization` (
   `email` varchar(255) NOT NULL,
   `phone` varchar(25) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `sightings`
+-- Table structure for table `sighting`
 --
 
 DROP TABLE IF EXISTS `sighting`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sightings` (
+CREATE TABLE `sighting` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `heroId` int(11) NOT NULL COMMENT 'foreign key for hero table',
   `locationId` int(11) NOT NULL COMMENT 'foreign key for location table',
@@ -70,7 +70,7 @@ CREATE TABLE `sightings` (
   KEY `fk_locationId` (`locationId`),
   CONSTRAINT `fk_heroId` FOREIGN KEY (`heroId`) REFERENCES `superhero` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_locationId` FOREIGN KEY (`locationId`) REFERENCES `location` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +86,7 @@ CREATE TABLE `superhero` (
   `description` varchar(450) DEFAULT 'Unknown',
   `superpower` varchar(450) DEFAULT 'Unknown',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,26 +105,18 @@ CREATE TABLE `superhero_br_organization` (
   CONSTRAINT `fk_superheroId` FOREIGN KEY (`superheroId`) REFERENCES `superhero` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping events for database 'superherosightings'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*
- * @Author: Ian Anderson
- * @Mailto: ianmanderson92@gmail.com
- * @Modified: 9/6/22, 6:26 AM
- * All Rights Reserved.
- *
- * @Project: Super_Hero_Sightings_Web_App
- * @Class_Name: superherosightings_DB_init_script_ianmanderson92.sql
- * @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero Web App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/superherosightings_DB_init_script_ianmanderson92.sql
- * @File_Name: superherosightings_DB_init_script_ianmanderson92.sql
- */
-
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-06  6:26:49
+-- Dump completed on 2022-09-08 10:05:01

@@ -12,17 +12,11 @@
 
 package com.sg.superhero.controller;
 
-import com.sg.superhero.dao.LocationDao;
-import com.sg.superhero.dao.OrganizationDao;
-import com.sg.superhero.dao.SightingDao;
-import com.sg.superhero.dao.SuperheroDao;
 import com.sg.superhero.dto.Organization;
-import com.sg.superhero.dto.Superhero;
 import com.sg.superhero.service.SuperheroServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -33,25 +27,13 @@ import java.util.List;
 public class OrganizationController
 {
 
-    /*@Autowired
-    OrganizationDao organizationDao;
-
-    @Autowired
-    OrganizationDao organizationDao;
-
-    @Autowired
-    LocationDao locationDao;
-
-    @Autowired
-    SightingDao sightingDao;*/
-
     @Autowired
     SuperheroServiceLayer serviceLayer;
 
     @Autowired
     RESTController restController;
 
-    @GetMapping("organizations")
+    @GetMapping( "organizations" )
     public String displayOrganizations( Model model )
     {
         List<Organization> organizationList = serviceLayer.getAllOrganizations();
@@ -60,7 +42,7 @@ public class OrganizationController
     }
 
     @PostMapping( "addOrganization" )
-    public String addOrganization ( HttpServletRequest request )
+    public String addOrganization( HttpServletRequest request )
     {
         String name = request.getParameter( "name" );
         String description = request.getParameter( "description" );
@@ -95,7 +77,7 @@ public class OrganizationController
     }
 
     @PostMapping( "editOrganization" )
-    public String performEditTeacher( HttpServletRequest request )
+    public String performEditOrganization( HttpServletRequest request )
     {
         int id = Integer.parseInt( request.getParameter( "id" ) );
         Organization organization = serviceLayer.getOrganizationById( id );
@@ -110,4 +92,4 @@ public class OrganizationController
 
         return "redirect:/organizations";
     }
-}//End of SuperheroController
+}//End of OrganizationController

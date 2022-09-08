@@ -1,13 +1,14 @@
+
 <!--
   ~ @Author: Ian Anderson
   ~ @Mailto: ianmanderson92@gmail.com
-  ~ @Modified: 9/8/22, 6:13 AM
+  ~ @Modified: 9/8/22, 9:33 AM
   ~ All Rights Reserved.
   ~
   ~ @Project: Super_Hero_Sightings_Web_App
-  ~ @Class_Name: editSuperhero.html
-  ~ @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero_Web_App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/src/main/resources/templates/editSuperhero.html
-  ~ @File_Name: editSuperhero.html
+  ~ @Class_Name: editSighting.html
+  ~ @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero_Web_App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/src/main/resources/templates/editSighting.html
+  ~ @File_Name: editSighting.html
   -->
 
 <!doctype html>
@@ -21,7 +22,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Super Hero Sighting DataBase</title>
+    <title>Update Sighting Record</title>
 </head>
 <body>
 <!-- Main Body of Page -->
@@ -49,32 +50,35 @@
 
 <div class="row m-4 border border-dark">
     <div class="col-3 text-center m-3">
-        <span class="h3">Edit Superhero/Villain</span>
+        <span class="h3">Edit Sighting</span>
     </div>
     <div class="col-7 text-center m-3">
-        <form action="editSuperhero" method="POST"> <!--TODO: Change to Put? -->
+        <form action="editSighting" method="POST"> <!--TODO: Change to Put? -->
             <div class="form-group row">
-                <label for="name" class="col-3 col-form-label">Name</label>
+                <label for="heroId" class="col-3 col-form-label">Hero ID</label>
                 <div class="col-9">
-                    <input type="text" name="name" id="name" class="form-control" th:value="${superhero.name}"/>
+                    <input type="text" name="heroId" id="heroId" class="form-control" th:value="${sighting.heroId}"/>
                 </div>
             </div>
+
             <div class="form-group row">
-                <label for="description" class="col-3 col-form-label">Description</label>
+                <label for="locationId" class="col-3 col-form-label">Location ID</label>
                 <div class="col-9">
-                    <input type="text" name="description" id="description" class="form-control"
-                           th:value="${superhero.description}"/>
+                    <input type="text" name="locationId" id="locationId" class="form-control"
+                           th:value="${sighting.locationId}"/>
                 </div>
             </div>
+
             <div class="form-group row">
-                <label for="superpower" class="col-3 col-form-label">Super Power(s)</label>
+                <label for="date" class="col-3 col-form-label">Date</label>
                 <div class="col-9">
-                    <input type="text" name="superpower" id="superpower" class="form-control"
-                           th:value="${superhero.superpower}">
+                    <input type="text" name="date" id="date" class="form-control"
+                           th:value="${sighting.date}"/>
                 </div>
             </div>
-            <input type="hidden" name="id" th:value="${superhero.id}"/>
-            <button type="submit" class="btn btn-primary">Update Hero</button>
+
+            <input type="hidden" name="id" th:value="${sighting.id}"/>
+            <button type="submit" class="btn btn-primary">Update Sighting</button>
         </form>
     </div>
 </div>

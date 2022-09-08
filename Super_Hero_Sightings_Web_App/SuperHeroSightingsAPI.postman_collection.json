@@ -246,6 +246,318 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "removeSuperheroFromOrganization",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/removeSuperheroFromOrg/2/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"removeSuperheroFromOrg",
+								"2",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOrgMembers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getAllOrgMembers/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getAllOrgMembers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location Functions",
+			"item": [
+				{
+					"name": "addLocation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New York\",\r\n    \"description\": \"The Big Apple\",\r\n    \"address\": \"New York State\",\r\n    \"latitude\": \"40.7128\",\r\n    \"longitude\": \"74.0060\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/superhero/addLocation",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"addLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLocationById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getLocation/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getLocation",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateLocationById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "updateLocationById",
+							"host": [
+								"updateLocationById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteLocationById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/deleteLocation/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"deleteLocation",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllLocations",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sighting Functions",
+			"item": [
+				{
+					"name": "addSighting",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/addSighting",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"addSighting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSightingById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getSighting/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getSighting",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSightingById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/updateSighting/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"updateSighting",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSightingById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/deleteSighting/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"deleteSighting",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllSightings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getAllSightings",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getAllSightings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSightingsByDate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getSightingsByDate/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getSightingsByDate",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSightingLocationsByHero",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getSightingLocationsByHero/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getSightingLocationsByHero",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllSightingsByLocation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/superhero/getAllSightingsByLocation/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"superhero",
+								"getAllSightingsByLocation",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

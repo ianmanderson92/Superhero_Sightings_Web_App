@@ -181,15 +181,15 @@ public class Location
 
         //Lat. and Long.
         ensureNotNull( this.latitude, "Latitude coordinate is required.", errorMessages );
-        if ( this.latitude.compareTo( BigDecimal.valueOf( 90 ) ) <= 0
-            && this.latitude.compareTo( BigDecimal.valueOf( -90 ) ) >= 0 )
+        if ( this.latitude.compareTo( new BigDecimal( 90) ) > 0
+            || this.latitude.compareTo( new BigDecimal( -90 ) ) < 0 )
         {
             errorMessages.add( "Latitude coordinate out of valid range [-90,90]." );
         }
 
         ensureNotNull( this.longitude, "Longitude coordinate is required.", errorMessages );
-        if ( this.longitude.compareTo( BigDecimal.valueOf( 180 ) ) <= 0
-            && this.longitude.compareTo( BigDecimal.valueOf( -180 ) ) >= 0 )
+        if ( this.longitude.compareTo( new BigDecimal( 180 ) ) > 0
+            || this.longitude.compareTo( new BigDecimal( -180 ) ) < 0 )
         {
             errorMessages.add( "Longitude coordinate out of valid range [-180,180]." );
         }

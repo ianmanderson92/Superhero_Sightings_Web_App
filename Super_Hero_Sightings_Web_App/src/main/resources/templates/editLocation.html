@@ -1,13 +1,26 @@
+
 <!--
   ~ @Author: Ian Anderson
   ~ @Mailto: ianmanderson92@gmail.com
-  ~ @Modified: 9/8/22, 6:13 AM
+  ~ @Modified: 9/8/22, 9:17 AM
   ~ All Rights Reserved.
   ~
   ~ @Project: Super_Hero_Sightings_Web_App
-  ~ @Class_Name: editSuperhero.html
-  ~ @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero_Web_App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/src/main/resources/templates/editSuperhero.html
-  ~ @File_Name: editSuperhero.html
+  ~ @Class_Name: editLocation.html
+  ~ @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero_Web_App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/src/main/resources/templates/editLocation.html
+  ~ @File_Name: editLocation.html
+  -->
+
+<!--
+  ~ @Author: Ian Anderson
+  ~ @Mailto: ianmanderson92@gmail.com
+  ~ @Modified: 9/8/22, 9:08 AM
+  ~ All Rights Reserved.
+  ~
+  ~ @Project: Super_Hero_Sightings_Web_App
+  ~ @Class_Name: editLocation.html
+  ~ @Full_Class_Name: C:/Users/ianma/git/c262-a6-SuperHero_Web_App/c262-superhero-sightings-ianmanderson92/Super_Hero_Sightings_Web_App/src/main/resources/templates/editLocation.html
+  ~ @File_Name: editLocation.html
   -->
 
 <!doctype html>
@@ -21,7 +34,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Super Hero Sighting DataBase</title>
+    <title>Update Location Info</title>
 </head>
 <body>
 <!-- Main Body of Page -->
@@ -49,32 +62,46 @@
 
 <div class="row m-4 border border-dark">
     <div class="col-3 text-center m-3">
-        <span class="h3">Edit Superhero/Villain</span>
+        <span class="h3">Edit Location</span>
     </div>
     <div class="col-7 text-center m-3">
-        <form action="editSuperhero" method="POST"> <!--TODO: Change to Put? -->
+        <form action="editLocation" method="POST"> <!--TODO: Change to Put? -->
             <div class="form-group row">
                 <label for="name" class="col-3 col-form-label">Name</label>
                 <div class="col-9">
-                    <input type="text" name="name" id="name" class="form-control" th:value="${superhero.name}"/>
+                    <input type="text" name="name" id="name" class="form-control" th:value="${location.name}"/>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="description" class="col-3 col-form-label">Description</label>
                 <div class="col-9">
                     <input type="text" name="description" id="description" class="form-control"
-                           th:value="${superhero.description}"/>
+                           th:value="${location.description}"/>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="superpower" class="col-3 col-form-label">Super Power(s)</label>
+                <label for="address" class="col-3 col-form-label">Address</label>
                 <div class="col-9">
-                    <input type="text" name="superpower" id="superpower" class="form-control"
-                           th:value="${superhero.superpower}">
+                    <input type="text" name="address" id="address" class="form-control"
+                           th:value="${location.address}"/>
                 </div>
             </div>
-            <input type="hidden" name="id" th:value="${superhero.id}"/>
-            <button type="submit" class="btn btn-primary">Update Hero</button>
+            <div class="form-group row">
+                <label for="latitude" class="col-3 col-form-label">Latitude</label>
+                <div class="col-9">
+                    <input type="text" name="latitude" id="latitude" class="form-control"
+                           th:value="${location.latitude}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="longitude" class="col-3 col-form-label">Longitude</label>
+                <div class="col-9">
+                    <input type="text" name="longitude" id="longitude" class="form-control"
+                           th:value="${location.longitude}"/>
+                </div>
+            </div>
+            <input type="hidden" name="id" th:value="${location.id}"/>
+            <button type="submit" class="btn btn-primary">Update Org</button>
         </form>
     </div>
 </div>
