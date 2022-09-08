@@ -23,6 +23,6 @@ public class WebConfiguration implements WebMvcConfigurer
     @Override
     public void addViewControllers( ViewControllerRegistry registry )
     {
-        registry.addRedirectViewController( "/", "index.html" );
+        registry.addRedirectViewController( "/", "index" );
     }
 }
