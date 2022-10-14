@@ -1,0 +1,22 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: super-hero-test-app
+spec:
+  selector:
+    matchLabels:
+      app: super-hero-test-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: super-hero-test-app
+    spec:
+      containers:
+        - name: super-hero-test-app
+          image: ianmanderson/super_hero:version1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
