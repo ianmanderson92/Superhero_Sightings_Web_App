@@ -1,4 +1,4 @@
-Application is currently hosted on an AWS EC2 Instance and can be accessed by following this link:
+Application and MySQL database are currently being hosted on AWS. The EC2 Instance and can be accessed by following this link:
 http://ec2-3-91-248-128.compute-1.amazonaws.com:8080/
 
 
